@@ -47,8 +47,8 @@ JSP(Java Server Pages) :------------------
 *Servlet and jsp are server side technology and this jsp has the additional capabilities like html and servlet capabilities 
 *then why jsp?--it is easier when compared to servlet in programming
 
-But whenever we see a servlet or jsp it has the combination of java,html and database but it is not enough when it is coming into big application.
-like we have more content to display then we have to write more html code and java in servlet.
+But whenever we see a servlet or jsp it has the combination of java,html and database but it doesn't good when it is coming into big application.
+like we have more content to display then we have to write more html code and java in servlet.It's looks like a clumsy
 so that'why we are using Spring MVC(MOdel,view,controller).
 
 JSP TAGS-----
@@ -77,6 +77,7 @@ Process:
 3)controller---View and after that that View---Client.
 
 imp---Model and view wont interact with each other.
+
 
 
 
