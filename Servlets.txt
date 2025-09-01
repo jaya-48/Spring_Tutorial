@@ -1,0 +1,82 @@
+For web application design i need to know about the servlets ,Jsp and MVC
+**Servlets--It is a class and it handles HTTp Requests and generate Response
+**JSP--JSP is a technology to create dynamic web pages using Java code inside HTML.
+**MVC(Model-View-Controller)-- is a design pattern that separates your application into three layers:
+Model----->The data and business logic (e.g., Java objects, database entities)
+View------>UI (e.g., JSP, Thymeleaf)
+Controller----->Handles requests, processes user input, interacts with model, and returns the view
+
+Client-Server Architecture -----
+
+**Client --who will seek for information or service 
+Server---who is providing service
+
+Based on the request from client side to server side it will generate responses
+These responses are 2 types:1)Static  2)Dynamic
+**For static we dont want any technology only we use html and css(It is same for all peple who are accessing these endpoint)
+**But Dynamic Response is different for each person
+Technology For Generating Dyanmic Response--(For Java)--->1)Servelt and 2)JSP OR now Spring MVC(Module)(Servlet is used behind this)
+
+*****About Servlet ------
+
+1)webServlet(url specifying annotation)
+2)HttpServlet this can extends by the class actually we created then only it is a servlet. 
+--Generally Servlet is a java program and controller and the servlet is in the servlet container in the server software of the server computer
+***Generally servlet has the capability of handling the http request and response and this servlet is not executed by JVM then we dont need any Main method.
+It should be executed by the servlet container which is in the server software like apache tomcat server.
+
+*******Redirecting to jsp from servelt and why?------
+Generally servlet has the ability to write html code inside it also but servlet has the more apability to d something more than that.
+But when it coming to html we can't call/define variables like name and city like that for printing dynamic values in html only thing is that we can use tags h1.
+that's why jsp is introduced in this jsp we can use variables and we can get dynamic values.
+
+********Request Dispatcher and forward() VS Include()-------------
+one application has the capability to maintain different servlets
+step-1:when client request for something then one servlet handles taking request and forwarding that request to second servlet while forwarding it will send response also
+step-2:second servlet is responsible for sending response to client.
+
+this can be done in two ways :using forward and second is include
+First using forward is like sending response from servlet2 but the actual response is from servlet1 it will send to servlet2.
+Second using include-- sending response from servlet1 but it will also include the response of servlet2.
+
+********HttpSession:------------
+
+In entire web application different servlets are there if you want to access data of one servlet from other servlets through this session we can access the data in entire application.
+
+JSP(Java Server Pages) :------------------
+*Servlet and jsp are server side technology and this jsp has the additional capabilities like html and servlet capabilities 
+*then why jsp?--it is easier when compared to servlet in programming
+
+But whenever we see a servlet or jsp it has the combination of java,html and database but it is not enough when it is coming into big application.
+like we have more content to display then we have to write more html code and java in servlet.
+so that'why we are using Spring MVC(MOdel,view,controller).
+
+JSP TAGS-----
+*For java code we have different tags--
+1)Script tags--General code(body of the service)
+2)Declaration Tags--instances creation
+3)Direct if tag--For imports
+
+**JSP code->jsp file convert to servlet ->output(This is actual process)  
+
+********Differences between Servlet and JSP:---
+1)Code(Java,JSp-everything using tags)
+2)Servlet is faster than the JSP.
+3)In servlet everything we have to declare but in Jsp everything is implicitly declared like HTTpRequest like that.
+But For who ever familiar with java it is recommended to go with servlet.
+4)In servlet when ever we make changes in application code we have to re deploy the application then only it will be reflected but in jsp everything is refleced when ever we do refresh.
+
+**************Introdction of MVC----------------
+1)(JDBC)Model-Database(It has the responsibiity of storing data,handling data like insert update,delete)
+2)(JSP+HTML)View--whatever the client want to see that will be visible through the view
+3)(Servlet)Controlller--It is medium between the View and Model
+
+Process:
+1)Client Request.
+2)(Controller---Model and model-controller)----Controlller will handle that request and if it want to store and retrieving data then it is sending to model and getting data from model to controller.
+3)controller---View and after that that View---Client.
+
+imp---Model and view wont interact with each other.
+
+
+
