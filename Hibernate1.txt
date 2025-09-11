@@ -1,0 +1,201 @@
+***************ORM-Object Relational Mapping-----------------
+
+A programming technique that allows you to map database tables to classes in your code.
+It is used to interact with relational databases using objects.
+
+********Fundamentals before Hibernate----
+1)Persistency----the process of storing and managing the data for a long time is called persistency.
+ 
+Persistence Technoloy/Framework frameworks:
+1)Hibernate
+2)TopLink
+3)EclipseLink
+
+**Differenec between Hibernate and Spring Data JPA:--------
+1)
+*Spring data Jpa is a spring module that built on top of JPA
+*Hibernate is a ORM framework.
+2)BoilerPlate code
+*Spring data jpa is very easy to write it is an interface and it has built crud operations.
+*In hibernate we ahve to maintain session,transcation and the crud operations we have to write on our own.
+3)Control:
+*For Spring data jpa we have less control means it will  control an maintain everything.
+*But For Hibernate we have everything in our control and everything is written on our own.
+4)Specification
+*Spring data jpa uses JPA uses Standrdly
+*Hibernate uses own Apis and supports JPA also
+
+
+******************************why Hibernate?---
+
+**JDBC is an API that is provided by the Java.
+The frameworks like Hibernate are built on top of this jdbc for making more easier and for generation of sql queries.
+
+*JDBC has some limitations :
+1)Boilerplate code---
+we need to write repeated code for oeprations(Inser,update)--(connect,close,connect,close) and we need to write sql queries.
+2)SQL
+That means a java developer needs to learn everything about SQL and sometimes we have to change the dbms like postgressql,oracle in that case we need to learn every dbms that is not possible
+3)Positional Arguments:
+that means when we are inserting data we need to mention positional arguments instead of named parameters
+JDBC wont accept named parameters and based on positio we need to search for the values it's difficult.
+4)we cannot store an entire object or we cannot read entire object directly in JDBC.we have to add one by one value/field/column
+5)we don't have a facility or flexibility to handle exceptions.we need to write catch blocks and we need to findout one by one.
+
+**Hibernate---It provides automatic generation of sql qyery and it will convert the entire java object to table.
+
+
+********ORM-------------
+1)ORM--it is tool/technology(generally it maps the java classes into database table)
+*For making this process as standardise introduced a specification of java that is JPA.
+2)JPA---Java/Jakarta Persistence API and it is an interface.it has so many classes to implement.
+3)Hibernate---it is the implementation of JPA and if we want to move from hibernate to any other implementation of JPA is very easy.
+
+**********JPA Interface----Implementations are 3:--
+1)Hibernate
+2)TopLink
+3)Ibatis
+
+*******why we use jdbc inside a Hibernate?------------
+1)Generally jdbc has the disadvantage like we have write sql queries.
+2)Hibernate will automatically hit the sql queries that means it will generates the queries.
+then also we need JDBC. That means Hibernate dont know how to talk with database.
+3)That's why Hibernate need JDBC inside that.
+--Process---
+1) For sending sql queries to database Hibernate must use JDBC drivers.
+2)Because JDBC is a standard java Api to talk with databases.
+3)Inside that Hibernate uses java.sql.connection, PreparedStatement, Resultset. 
+**********Hibernate---Implementation 
+1)Mapping(Java class to table)(mapping can be done and identified by the hibernate through annotation/XML
+2)It needs configuration details like url,name,password and database.
+Generally the connection is taking care of jdbc implicitly in Hibernate other things are like queries and all take care by the hibernate.
+
+********Hibernate Project setup/Architecture:-----
+1)Entity--
+***POJO---Plain old java object :
+*It is a general class with fields and methods
+*It is like entity class in Hibernate.
+2)Configuration file which has the details of mapping and database details.
+
+*****************Process-------------------
+**Step1:(configuration oject)
+First we have to create a configuration object and by using configure() method we have to link that configuration file to object.
+Then that object has the all details of the configuration.
+**Step2:(session Factory)
+we have to get the object of session Factory and in this it will implicitly creates and maintains the objects whatever needed for project.
+For getting this session Factory object we have to invoke buildSessionFactory() method.
+**Step3:(session)
+we have to create a session by invoking the opensession() method.
+--this session is used for performing all operations(select,insert,update,delete)
+*There are 2 operations like:
+1)select operation(select):
+--For this operation we can directly perform operation using this session.
+2)non select operation(insert,update,delete):
+--For non select operation we need to get the transcation object from session by invoking begintranscation() method.
+--by using this transcation object we can perform insert,delete,update.
+**Step4:Commit/Rollback
+--after performing operation we need to commit/rollback especially when we are performing non select operation.
+**Step5:Close
+--once the operation is done then we have to close that session.
+
+*****Annotations:---------
+*Selective insertion --Transient annotation
+1)Transient:if we applied this annotation to any column then that column will not be created and reflected in database.
+2)GeneratedValue:---
+*this is used for mainly primary key column,because that column must be unique.
+*@GeneratedValue(generator="my_seq",strategy=GenerationType.IDENTITY)
+--generator is specied for telling to hibernate i am generating my own sequence.
+--GenerationType has different values like IDENTITY--For MySQL,Sequence---Oracle,AUTO--if you don't know which vendor(oracle,mysql)
+3)SequenceGenerator:---
+*@SequenceGenerator(name="my_seq",sequenceName="my_Own_Sequency",initialValue=100,allocationSize=1)
+---sequenceName is original name,initial value from where our sequence will generate,size is like 100,101 difference.
+
+
+
+
+***Hibernate it self write the sql queries based on our requirement specified.
+Inside the hibernate JDBC works the all process.when returning the result from database it will send as a object and it will stored in that object itself.
+
+###Eager loading----GET() with session.
+when we are using get method for retrieving the values from database based on id.
+Then the hibernate will create a JDBC environment and then asks for values and it will return the values by returning a object.
+
+###Lazy Loading---Load/getReference method with session.
+*then the hibernate will create a proxy object and then it will return the id without creating a JDBC Environment.
+*When we are asking for more details based on id then it will creates a JDBC Environment and asks for record and it will return the object with values.
+
+**Generally if we are asking get the details based on id then the hibernate will generate a query and asks for details from database using jdbc.
+But it will not directly creates object because it is costly process. when the details are in database then it will creates a object.
+
+***********Level 1 Caching in Hibernate----------
+*Level 1 caching is a memory(Temporary memory) which is used to store hibernate objects.
+*Per one session hibernate will create one level1 caching memory.
+if we are seeking two times a details of same id then first time it will hit the query but second time it will seek in the level1 caching memory.
+Like whether this id details are stored in memory or not if it is not stored/id is not same then only it will hit the query.
+**if we are using different sessions then it will create level1 caching for each session.
+
+***********Level 2 Caching---------
+1)It is also same like cache1 but this is for whole session decalred in that.
+2)Level 2 Caching is at the level of SessionFactory not for single sessions means it is for entire sessions which are created by the session Factory.
+3)This level 2 caching is not maintained/implemented by hibernate.It is implemented by third party if we want to use this we have add maven dependency (ehCache) and add annotatons to entity.
+4)Now if we create 2 sessions and called get method for same id then it will hit query only one time. 
+Because first time it will hit and get the results but second time it will look in the cache memory for that id.
+
+**********Hibernate configuration using java without XMl File----
+1)using configration object we can define our properties and values
+2)Configuration config=new Configuration()
+ ---config.setProperty(property,value) in this way we can set the configuration details.
+
+But this is not the good choice.Because we can face some problems with this configuration using java.
+
+********Difference between Xml and applicaton.properties:-----------
+1)Xml--using property tag<property></property> within this we are define property name and value.
+.Properties---we can define like (property=value).
+2)Xml---we can define mapping detals and configuration details in the same xml file.
+.properties---only we define configuration details. then the config object automatically detect configuration details
+and also in java main config.addAnnotatedMethod() in this method we define that entity class.
+*if we want mapping details,configuration details in the same file then we will use xml file.
+
+**In RDMS generally we use primarykey and foreignkey for connecting two tables.
+In the application we can connect two tables through association mapping.
+
+*************Association mapping:--------
+
+*One to One mapping:
+--cascade(what ever happen to this entity it will be applied to other entity which is mapped with this entity.)
+*many to one and one to many mapping:----
+*many to many
+*developer will take care of that entity and giving mapping relation details.
+*But the hibernate has the responsibiity to create tables and primary,foreign key creation and establishing relation.
+
+
+*********Working with large Objects(LOB):-------
+**It is classified into two types :--1)Binary large ojects--(BLOB)
+                                    2)Character Large objects--(CLOB)
+
+**For specifying those are large objects we use one annotation called @Lob
+eg:--- @Lob
+       private byte[] image;
+
+*whenever we want get the binary data in the form of byte data then we have to use IO concept
+1)FileInputStream
+2)FileReader
+*File Input/Output 
+
+Tasks:
+1)Association mappings.
+2)Inserting/Retreving the data from database in the form of LOB.(text and image files).
+
+Bulk operations:----
+*It means performing operation on multiple records like inserting,retrieving,updating.
+*HQL(IT IS THE IMPLEMENTATION OF JPQL) OR(NATIVE SQL)--These are used for the performing complex operations.
+**HQL-Hibernate query language.it is mainly for retreving records.
+--1)HQL is a database independent.That means it is associated with entity class not with the table.
+This is query language which is specific to write queries based on entity class object and this is the implementation of JPQL.
+2)JPQL queries are translated by JPA into SQL specific to the underlying database (MySQL, PostgreSQL, Oracle, etc.).
+3)---HQL = Hibernate’s own query language (older, more features, Hibernate-specific).
+-----JPQL = Standard query language from JPA (portable, works with all JPA providers, basically a subset of HQL).
+
+***HQL queries:---
+*createquery for querying results based on conditionlike sql this is HQL
+*for updating and deleting queries we can use mutatedquery instead of create query.because create query is deprecated for updation and deletion.
