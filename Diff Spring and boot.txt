@@ -1,0 +1,96 @@
+Difference between Spring and springboot through configuration:----
+
+***In spring:--
+*For dependency Injection and bean creation we will create beans in xml or we will create beans through annotations 
+and we will mention that we are creating beans through annotation in xml file.
+
+*For Dependency injection we are activating IOC containers manually like applicationcontext.
+*In this we have to configure everythng like database driver and configuration for datasource a
+like database details and bean creation for that.
+**Manual Bean Creation (Traditional Spring)
+
+In plain Spring, you must explicitly create the bean:
+
+@Configuration
+public class AppConfig {
+
+    @Bean
+    public DataSource dataSource() {
+        BasicDataSource ds = new BasicDataSource();
+        ds.setUrl("jdbc:mysql://localhost:3306/mydb");
+        ds.setUsername("root");
+        ds.setPassword("root");
+        ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        return ds;
+    }
+}
+
+***In spring boot:--
+*But in springboot that IOC containers activation is managed by automatically using SpringbootApplication annotation.
+Everything will handle by the @SpringbootApplication annotation and whenever we are running that application then immediately it enables autoconfiguration and it will create datasource bean for database links
+and it will automatically configure everything.
+Automatic Bean Creation (Spring Boot)
+
+In Spring Boot, you normally don’t create this bean manually.
+Instead, you just define properties:
+
+spring.datasource.url=jdbc:mysql://localhost:3306/mydb
+spring.datasource.username=root
+spring.datasource.password=root
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+******What is DataSource:--?
+
+A DataSource is simply an object that represents a database connection pool.
+Spring works with dependency injection (DI).
+For Spring (or JPA/Hibernate) to access the database, it needs a DataSource object to get connections from.
+@Service
+public class UserService {
+
+    @Autowired
+    private DataSource dataSource; // <-- Injected automatically by Spring
+
+    public void printUsers() {
+        try (Connection connection = dataSource.getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT * FROM users")) {
+
+            while (rs.next()) {
+                System.out.println("User: " + rs.getString("name"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
+It is the general way of using that datasource to get connection from database.
+Whenever we are using JDBC oR Spring Data JPA
+
+Spring Boot will:
+
+Use the DataSource bean.
+Create an EntityManagerFactory using it.
+Handle all database connections automatically.
+✅No getConnection()
+✅ No JdbcTemplate
+✅No manual SQL — JPA takes care of it.
+
+✅✅What is EntityManagerFactory?
+
+It is a factory object that creates EntityManagers.
+EntityManager is the main JPA interface used to interact with the database (persist, find, update, delete entities).
+EntityManagerFactory holds the metadata about all your entities and how they map to database tables.
+Here’s the chain of responsibility:
+
+DataSource → Provides physical connections to DB.
+EntityManagerFactory → Configured using DataSource, knows about all entities, and creates EntityManager instances.
+EntityManager → Actually performs CRUD operations, queries, transactions.
+
+**JPA is an interface and it has so many interfaces inside it. But actually the jpa is implemented by hibernate.
+In JPA the entity manager is a main jpa interface to interact with database and perform crud operations.
+
+Aspect                 JPA                                                   Hibernate
+
+Type	        Specification (set of interfaces)	                  Implementation (framework)
+Who Defines	Java EE / Jakarta EE (Oracle, now Eclipse Foundation)	  Red Hat
