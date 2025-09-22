@@ -1,0 +1,261 @@
+Spring Fundamentals:---------
+
+The current owner of the spring is VmWare and it is Officially created in 2004 by Rod Johnson. But originally it 's created in 2002.
+
+*Before using spring we have EJB(Enterprise JavaBeans) it is also used for developement purpose.It is server side component architecture.
+It is designed to simplify the development process.
+Types :
+1)Session Beans
+2)Message-Driven Beans
+3)Entity Beans
+
+*****why Spring used instead of EJB:---(EJB disadvantages)
+*1)But it is complex--Developers have to write lot of boiler plate code nad xml configurations.
+*2)Heavy weight--It requires an EJB container
+*3)Slower Development--it is hard to learn and longer developement cycles.
+
+Spring advantages:
+1)light weight
+2)POJO based
+3)Aspect oriented programming
+4)Dependency Injection(IOC)
+5)Easy Integrat‭ion.
+
+*Spring is a java Framework and it has the modular architecture used to build enterprise level applications.The below are the different features we can use for different purposes.
+Spring has different features/projects like :
+1)Spring Boot
+2)Spring AI
+3)Spring Data
+4)Spring cloud
+
+1)Spring : It is the foundation for other features like spring cloud like that.
+In this we have to configure manually and we have to write manually.
+2)Spring Boot :It is tool built on top of spring and it is used for faster development 
+It has the advantages like auto configuration and ready made dependencies.
+3)Spring Data:
+with this Spring data fetaure we have the Spring data Jpa,spring data mangoDB.
+4)Spring cloud:
+In this we have Eureka(Service Discovery),API gateway,circuit breakers,load balancer.
+These are mainly used for Microservices Communication.
+
+The most important Feature for spring framework is Dependency Injection(IOC).
+
+****** Spring core:-- 
+XML--
+XML+Annotation
+java+Annotation
+Spring boot
+These 4 are annotation based
+ 
+
+*********Dependency Injection/Inversion Of Control------------
+
+If we want to use another class to work our class then we are creating that other class objects and we are using. Then it is tightly coupled both classes like (CAR ANd Engine example)
+**Example:--
+if the car itself is creating the engine then we dont have any option to use any other engine . If we are using the engine created by other ones then we ave flexibilty to change.
+That's why we are using the dependency injection through constructor injection and setter injection. this is a general way and it is a technique to implement IOC.
+
+why we are using this :--
+*Because we want applications to be loosely coupled for maintainability,flexibility like easy to change and unit testing
+**Generally this loose coupling is works with interfaces and implementation course,java,springboot 
+if that course is passed as arument in telusko then it wont depend on one thing it has the flexibility to switch between java nad springboot.
+we could pass through setter and constructor as injecting inother classes.
+
+*Inverting the one class control to another class
+*Instead of your class controlling how its dependencies are created and managed, that control is inverted and given to an external entity (framework, container, or another class).
+**Dependency Injection is a technique for implementing Inversion of control.
+
+Inversion of Control means:
+➡ Instead of the class controlling its dependencies, someone else (container or framework) controls them.
+
+In other words:
+Normally: Your class decides what to create → YOU control object creation.
+IoC: Some external container creates and gives you objects → CONTROL is INVERTED.
+This makes your class focused only on what to do, not how to create its dependencies.
+
+Target Class:
+*which ever class is using methods/services/business logic from other classes is target class.
+Dependent object:---
+*Whose services are used inside the target class is Dependent class.
+Dependency injection:---
+*Injecting the dependency object into target class is called dependency injection.
+
+
+
+**Bean:---
+*Generally bean is like a object which is created and managed by the spring.
+
+*******Getting the classes from jar file:
+*ArrayList,Scanner and some are the clases jar files are available in jdk that's why we are accessing that without any inconvinience.
+if we want use any class from our code then we can upload of our .class file(jar)(complied file) and dowload and add to our project.
+
+********************What is Maven?------
+1)For using predefined classes we want to include that jar files in our project like jdk has the jar files of util library.
+2)Like that if we want to use spring classes or annotations then we have to include that jar files in our project.
+So adding that jar files using maven by avoiding manual adding.
+3)if we are using maven then that automatically goes to the google and it will download whatever we want.
+4)whatever we want to specify in pom.xml file as a dependency.
+
+*******************Dependency Injection through XMl approach:------
+
+IOC Containers:---
+*If we want create a object by the spring then we have to activate the spring IOc containers.
+*IOC container is a container which is used for creating and managing the beans.
+It is of two types:--1)BeanFactory
+                     2)ApplicationContext
+*Those two are interfaces and it has so many classes to implement these interface.
+***************Manual Dependency Injection using xml:-------------------
+1)ApplicationContext steps:
+
+Object creation by the spring using containers: In main method
+*ApplicationContext context=new classPathXmlApplicationContext(applicationconfig.xml);
+Telusko t=context.getBean(Telusko.class);
+Boolean status=t.getthecourse(amount);
+
+applicationConfig.xml:--
+*<Bean id=Telusko class="main.Telusko"/>--object Telusko
+<property ref="java" name="course"></property>--injecting the object of anther class through setter--(setter injection)(injecting java object into this).
+<constructor-arg></constructor-arg> for constructor injection
+
+Without property tag how spring automatically inject the dependency through xml:----
+<Bean id=java class="service.java"/>
+<Bean id=sb class="service.Springboot" primary=True />
+<Bean id=Telusko class="main.Telusko" autowire="byType"/>
+*autowiring that dpendency by the Telusko type like ICourse types:java,springboot
+*If we mention primary to any bean then that bean will be injected automatically by setter injection.if setter is not there then it will throw exception.
+
+****second process: autowire="constructor"  ,,, In dependency bean autowire-candidate="false" that means this will not be injected in another bean.
+****third process: autowire="byName"  In dependency bean <Bean id="course" />which is mapping with main bean type then that will be injected
+****Fourth Process:---
+Inside <beans 
+xmlns:p=""
+xmlns:c=""/>
+*p indicating the property(setter) for bean
+*c indicating the constructor for bean
+Example:----
+<bean id="depart" class="package_name.class_name"(Service.Department) c:dpNo="1" c:dpName="Alien"/>
+<bean id="emp" class="Service.Employee" p:empid="1" p:name="jaya" p:city="guntur" 
+
+
+
+2)Bean Factory steps:--
+In main method:
+*DefaultListableBeanFactory beanFactory=new DefaultListableBeanFactory();
+*XmlBeanDefinitionReader reader=new XmlBeanDefinitionReader();
+reader.loadBeanDefinitions(applicationconfig.xml);
+Telusko t=beanFactory.getBean(Telusko.class);
+
+Differenec between ApplicationContext and BeanFactory:--
+*ApplicationContext will create beans and keep it ready whenever it wants(Eager Initialization)
+*BeanFactory will not create beans until it get called like whatever beans required that will only creates whenever it is called(Lazy Initialization)
+
+Can i load many xml files through single IOC container???????????????---- yes with the beanFactory
+can we achieve lazy initialization through applicationContext ---yes with scopes:
+1)Singleton
+2)prototype
+3)request
+4)session
+*Every class which is in spring it is a bean.
+*POJO can may be bean or not also.
+POJO means simplified class with the getters and setter and fields.
+
+Stereotype Annotations:----
+*Stereotype annotations means that are class level annotations that means these are mentioned above of that class. 
+And also it instructs the spring to create and manage bean of that class.
+*Stereotype:-- It means the statndard representation of something.
+*Stereotype annotation: it is like some annotations are there that annotations tells what it does(role) like titles in company(manager,ceo)
+*******Annotation:---
+1)An annotation is a special metadata tag you can add to classes, methods, fields, parameters, or packages.
+It does not change the code’s behavior directly, but it gives extra information to the compiler, tools, or frameworks (like Spring) about how to handle that code.
+Some important annotations:
+**Controller,RestController,service,Repository,component,configuration,autowired,qualifier,primary,bean
+
+We have a layered approach:
+1)web layer---web logic(http request and resonse)
+2)service layer---actual business lgic
+3)Repository layer----DB related logic and operations.
+@Component--it tells spring to manage nad create bean of that class. The remaining stereotype annotations are also having this annotation inside that.
+eg:--@Controller--@Componnet+Specific purpose.
+@Bean:--it can't apply to class level it is only method level
+Usage of bean:--
+*Sometimes we our self will create a object of the class and we want that object is managed by the spring then that time we will use this bean.
+this bean tells to spring manage this object.
+
+***********************************Dependency Injection through XML + Annotation-------------
+IN XML we have to specify we are using annotations this time. For that 
+<Context:annotation-config/>
+For telling that annotations are in which package that means we have to specify in which package we are using that annotations:
+<context:component-scan base-package="package name"><context:component-scan/>
+*The above is for just bean creation .Then the dependency injection :---
+@Autowired annotation is for dependency injection. If we are using interface and that interface is implemented by different classes then we have to mention which class is going to be injected.
+Eg:---
+****First approach:-----
+@Autowired
+@Qualifier("java")(#camelcase)(**This can be applied only for field,method,parameter not for constructor)
+private Icourse course;
+**If we want to apply for constructor then we can use parameter wise
+@Autowired
+public Telusko(@Qualifier("springBoot") ICourse course){
+this.course=course;
+}
+
+***second approach:--Dependency Injection
+@Autowired
+private Icourse course;
+then which class we want to inject then we have write @Primary on above of that class.
+***If we compare those two annotations like qualifier and primary the high priority is having for the qualifier annotation.
+if we use those two annotations in one application then the qualifier will only executed it dominates the primary annotation
+
+
+
+
+*******HOW Springboot activates IOC :
+1)@SpringBootConfiguration
+2)@EnableAutoConfiguration
+3)@ComponentScan
+
+***@ComponentScan ------------ 
+It instructs Spring where to search for classes annotated with stereotypes (@Component, @Service, @Repository, @Controller, etc.) and registers them as bean definitions.
+**SpringBoot will initialize applicationContextinitializer before creating the context.
+*Then it will create applicationcontext and then springbootconfiguration annoation tells to context scan this package.
+**@ComponentScan is just instructions.
+
+The ApplicationContext (IoC container) is the one that:
+Reads those instructions
+Finds components
+Registers them
+Finally creates the objects (beans)
+
+*************@Bean usage:---
+*when it's coming to dependency injection generally the predefined classes don't have any annotation for bean creation.
+If we are trying to inject that predefined class object into another class then it will throw exception because applicationcontext will activate the IOC containers to perform dependency injection.
+But that application context don't know about the predefined class
+
+Solution:---
+that predefined class object can be get it by writing one method 
+1.Example:---
+@Bean----it will create a bean of that .
+public LocalDateTime createtimeobject(){
+return LocalDateTime.now();---it will return an object
+}
+
+then we can perform dependency injection
+@Autowired
+private LocalDateTime time;
+
+**WHY i have to write @Bean and @ComponentScan in Configuration class only????
+*Because Every application starts with the configuration class only.
+*Why @Bean in class:--
+#because if we write two different beans methods in one class that is not the configuration class then one bean is used in inside of another bean.
+#Then it will create fresh bean everytime when that method called (This is for normal class)
+#when it's coming to configuration then everytime one bean only used whenever it is called the mthod.
+
+*Why @ComponentScan :--
+*Generally at the starting itself it looks for componentscan then if we use this nrml class then the compinenscan will be exceuted by multiple times.
+If we use this in a configuration it will only call one time.
+
+
+
+
+
+
