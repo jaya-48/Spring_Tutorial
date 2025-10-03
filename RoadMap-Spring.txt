@@ -1,0 +1,23 @@
+Bean life cycle
+JDBC+Spring framework
+Spring dataJDBC
+Spring data jpa-->crud,jpa,pagination and sorting,mangodbrepo
+sql,nosql
+Springweb mvc
+Restuful webservices---
+1)Actuators and scopes are imortant.
+2)hatious
+3)Rest Template and web client
+4)Apache kafka
+5)Reddis Server
+6)Batch application with batch processing(Bulk data)
+7)AOP
+8)OAuth
+9)Spring security
+10)feignclient,rest template for accessing api
+
+Junit
+mockito server
+
+Microservices
+1)api agteway and cloud,feignclient
