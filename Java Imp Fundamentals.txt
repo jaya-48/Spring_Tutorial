@@ -1,0 +1,157 @@
+oops,interfaces(8),lambda,exception(9),enum and annotations,multithreading,stream api
+Platform:---
+*Generally Platform means hardware+software===processor+operating system
+*For software Developer platform means->operating system
+*language(High level)->compiler-->Machinelevel language(.exe)(machine understable language)---->execute(windows)--->output will come
+#####Platform Dependent:--
+*that means development platform and executable platform must be same.
+Example:--
+i developed application on windows then that .exe file is uploaded into internet and again i am using that .exe file for executing that code then it will execute on the windows only
+not by the linux or mac.Because it is platform Dependent.
+**************How java is platform independent:--
+#######*Platform Independent:---
+**Windows---Java code->Java compiler->Byte code(.class)->JVM(Interpreter)->Machine code->execute on platform->result
+-->Java compiler is a special compiler it converts the high level to byte code(neither HLL nor MLL)(Secure humans can't understand).
+this bytecode is platfom independent(it can be exceutable by any platform)
+JVM(platform Dependent) then this jvm will convert the bytecode into machine code(binary code) by using interpreter.
+**MAC--Byte code(download from internet)->JVM-->Machine level-->execute on platform-Result.
+
+*JAVA Follows the concept of WORA--Write once exceute anywhere.Java was officially starte by 1995-1996 unofficially 1994.
+It is developed by SUN Microsystem of Team green(Standford University network) people and the team lead by James Gosling.
+In 2011 the java and sun microssystem is acquired by the Oracle.
+
+Key features of Java:--
+1)Free(some language are not free for professional purpose)
+2)Open Source(If you want to add some concepts(if you want to Contribute)then we can add easily).
+From java 7 oracle made it as closed source because oracle has people to develop java.
+3)Object Oriented
+4)Portable/Platform Independent
+
+System Software--compiler,JVM(software that needs to run the apps and it provides a platform to run apps)(computer to run annd manage)
+Application Software-chrome(users can perform specific tasks)
+Compile time--the phase of actual conversion from source code to machine code(syntax,type,other errors)
+Run time --the actual program run(divided by zero)
+
+Two types of programming languages:--
+1)strongly/Statically typed languages---It is mandatory to tell which type of adata we are storing ->int a=18;
+2)Dynamically/Weakly Typed language--It is not mandatory to tell -->a=18 eg:--python,javascript
+
+###RAM:-For Faster execution of any application it is useful if we have more ram then our application faster.
+Inside RAM there is specific area or region for java that is JRE. Inside JRE JVM is there for exexcution.
+JVM has specific data areas to keep data.
+Most important is Stack and heap area
+**At runtime only this stack and heap memory will be executed of the program.
+
+
+*which variables are declared inside a class it is instance variables.
+*which variables are declared inside a method is called local variables.
+*Generally execution starts from main method.when it coming to main method main method will store in the stack.
+*then it goes to the rightside of a equal that is constructor it will goes to the instance variables that are stored in heap memory inside of an object memory.
+*if there is any methods then it will execute on stack only if variables are declared inside that method that are also stored in the stack itself.
+Stack:---
+1)Main  method
+2)Object of a class(memory---1000)
+3)methods and variables inside that method are stored in stack itself.
+***memory deallocation process:---
+first methods are called by using object when ever that method is going to be executed then stack will create the stack frame and after it'sexecution everything will be deallocated.
+then it goes the main method everytask is completed of the object then the main method stack also deallocated then object is refernce less.
+**Then in the heap memory instance variables are de-allocated by the garbage collector because there is no reference for that.
+
+Heap:----
+1)instance variables of that class within the memory of the object
+eg:--1000 is the memory 
+  inside that num1,num2 are stored with default values initially if it is not initialized.
+then that 1000 is reffered to the object of that class.
+
+*****What is JDK:
+*JDk-Java Development kit(It is toolbox for developing java applications).It is complete software package provided by the oracle.
+It is used to develop,complie and run java applications.
+JDK consists:
+
+1)JRE(Java Runtime Environment)--(JVM+Core Libraries)
+*This is what alows java programs to run.
+*This contains JVM
+*Core Libraries is like java.util,java.sql
+
+2)Development Tools
+*Javac--Java Compiler(It compiles and convert .java to .class bytecode)(it wlll check the syntaxes)
+*java---runs .class files on JVM.
+*jdb---debugger
+*jar--Tools to create jar files.
+*javadoc
+
+JDK---JRE+Development Tools
+****JRE---JVM+Core librraies
+Without JRE, JVM won’t know where to find classes like String, ArrayList, etc.
+
+****JVM--Bytecode interpreter,garbage collector
+*It takes bytecode (.class files) and converts it into machine code for your operating system/CPU.
+VM is the heart of Java. It is responsible for running Java bytecode by converting it into machine code, managing memory, and running the Garbage Collector.
+
+*******ByteCode:----
+Bytecode is not machine code, but a set of platform-independent instructions understood by JVM.
+Bytecode is the compiled form of Java source code that is executed by JVM, making Java platform-independent
+
+***********Garbage Collector:---
+Garbage Collector (GC) is a memory management process inside JVM.
+It automatically frees memory used by objects that are no longer reachable (not referenced by any variable).
+
+****Java Is a Platform Independent :----
+****when we compile java class then it convert that to bytecode and packages into jar fie.
+By using that jar file we can run on anywhere like mac/Linux and in android also because it has the flexibility to understand byte code by using JVM
+PRocess:--JVM converts bytecode into platform specific machine code.
+
+JAR file:package of bytecode,details of code 
+
+###JVM Architecture:----
+*In order to execute the code it has many components the main 3 are:--
+1)Class Loader Subsystem--loading of the code happen in this ecosystem.
+2)Runtime Data Areas---it will keep it ready some data areas to store data (in stack and heap)
+3)Execution Engine--using this engine only the code will convert into 0's and 1's
+
+1)Class Loading:--
+*Loading:--1)Bootstrap,2)execution class loading,3)Application class loading
+*Linking:--1)verify,2)Preparation stage,3)Resolution stage
+*Initialization:-is there any static block initialization it will be done automatically by JVM.
+2)Runtime Data areas:--
+*Method area:---First all code be kept here.
+*Stack area:---whenever is tehre any method calls,constructor,forloops for everything the stackframe will be created.
+*Heap:--whenever is there any instance variables or object or static it will be stored in heap.
+*PC Register:---For every instruction the address will be stored in PC Register
+*Native Method Stack:--- if we are using anyother language code then we are able to allocating memory in this.(For executing this java uses java native interface)
+3)Execution Engine:--
+*there are 3 main things are there:--
+1)Interpreter--it will convert bytecode into 0's and 1's line by line
+2)Just intime compiler---if there is any frequent calls like is there any code which always repeating then this compiler executes that code.It is used to support the interpreter.
+3)Garbage Collector --is there any reference less object then it frees the memory.
+
+
+Composition in java:---
+*Composition means (has-a) relationship between calsses.
+*that means one class having a object of another class.
+*Inheritance(is-a )relation that means one class is inheritaed by another class.
+
+**Tight Coupling:----
+*that means one class having the other class details.if one class having the issues or changes then it will affect the other class also then it is called tight coupling.
+*Loose coupling is opposite of that.
+
+**Coupling:--
+1)Coupling means how much one class is dependent on other class.
+2)If two classes are highly dependent then it is tight coupling
+3)If two classes are depend on each other as little as possible then that is loosely coupled.
+
+J2EE was created by Sun Microsystems in 1999 as a part of the Java Platform to simplify enterprise software development.
+It standardized APIs like Servlets, JSP, EJB, JMS, and JDBC so that enterprise applications could be portable across different vendors’ application servers.
+After Oracle acquired Sun Microsystems, J2EE was renamed Java EE, and today it is known as Jakarta EE under the Eclipse Foundation.
+
+Life Cycle of a object:--
+*When the object is destroyed which one should execute first and next.
+ 1)Static block execution
+2)java instance block(non static)
+3)constructor
+4)method class(it is excuted when it is called)
+
+Java Supports backward compatibility that means if we have 21 version we can use and this version is 17+additionalfeatures.
+
+Design patterns
+
