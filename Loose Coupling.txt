@@ -1,0 +1,67 @@
+**********************LOOSE COUPLING------------------------
+*****Generally why loose coupling and what is the term??????
+Example:-----
+1)Take one class that is amazon and the delivery services of amazon is fedex,firstflight and bluedart
+suppose we are directly using the fedex service only of amazon if suppose that time fedex service is not available.Then amazon must stop the delivery service.
+Because it is only one option the service is fedex that'why we have to stop that.
+2)Suppose amazon is using 3 services if fedex is not there then amazon can use firstflight and bluedart because it has the flexibility to change.
+
+Java Example:--
+***In above example 1st one tightly coupled and second one is loosely coupled. because amazo is tight coupled with fedex if fedex is no then no delivery service.
+***Coming to Java Example:-----
+1)Supppose amazon is  using fedex thatmeans directly declaring through by extending a class or creating a object inside class or directly creating object in the costructor is tightly coupled.
+Because suppose i deleted the fedex but i directly declared right? then it will show some error and if i want to use other classes in future also it is not possible.
+This is tightly coupled to each other.
+2)Suppose we are creating the deliveryservice interface and this interface is extending the other 3 classes. And also we are declaring the reference of interface in amazon through setter,constructor.
+then we are specifying the service whenever we want that means whenever we are creating object that time we are specifying the service if it is not there then we can use other one.
+Suppose 3 are not there then we can use any other services in future. That means we can implement that inetrface by another class in future there is no problem.
+This is loosely coupled.
+
+Class Amazon{
+  private Deliveryservice service; 
+  public Amazon(DeliveryService service){
+     this.service=service
+  }
+  public void setService(DelieveryService service){
+     this.service=service;
+  }
+)
+Amazon a=new Amazon(new fedEx());
+a.setService(new fedEx());
+  or 
+Amazon a=new Amazon(new firstflight());
+a.setService(new firstflight());
+
+*suppose both constructor and setter is there then higher priority is for setter only.
+
+***This is majorly done through the code to interface approach that means IDeliveryservice is service that can implement any no of classes so in future also we can implement that.
+*this approach is used for loose coupling.
+*it is one of the approach/Design principle which follows in all Design patterns.
+
+*********this is Dependency Injection that means injecting the dependency object into Target class.
+***Dependent Object---- whatever services are there fedex,firstflight are dependency classes that means target class is dependent on these.
+***target Class:------ which class is using dependency object that is Target class.
+**Generally in core we are creating the objects and injecting that class objects. But when it's coming to spring it will automatically handles that means giving the control to spring is called Inversion of Control(IOC).
+
+
+
+###########################Total Number of GoF Patterns
+
+***********************23 classic patterns are defined in the Gang of Four (GoF) book.
+
+1)Creational: 5
+2)Structural: 7
+3)Behavioral: 11
+
+These 23 are considered fundamental, but modern programming introduces additional patterns like Dependency Injection, MVC, MVVM, etc.
+
+🔹 4. Important Principles behind Design Patterns
+
+*Program to an interface, not an implementation ✅
+*Favor composition over inheritance ✅
+*Encapsulate what varies ✅
+*Open/Closed Principle – open for extension, closed for modification ✅
+*Single Responsibility Principle – one class, one reason to change ✅
+
+
+ 
