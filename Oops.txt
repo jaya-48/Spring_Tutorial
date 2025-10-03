@@ -1,0 +1,299 @@
+Design aptterns important,Comparable,comparator used sorting in collections and shallow copy and deep copy
+######Method Overloading:---
+**Creating multiple methods in same class with different parameters.
+Java Compiler will resolve this at compile time based on number of parameters,datatype and order.
+This is caled as false polymorphism or compile time polymorphism.
+We can overload the main method in java also it wont give any compile time error. And it takes only main method String[] as argument.
+the compiler will focus on the numebr of parameters and name of method only.
+
+######Encapsulation:---
+*access specifiers(private,public,protected),getters,setters,this,static,constructor
+*Restricting access to the data is called encapsulation.
+*This keyword has the address of curently running object and it is used to differentiate instance variable and local variable and set currently running object data.
+*when we are using the same name in setter then this keyword is used to differentiate and it is indicating as a instance variable of that class.
+*This keyword is used to set  the currently running object or it has the address of currently running object.
+*Process of giving controlled access to data members of a class by making them as a private and getters,setters. 
+*This keyword is the solution for shadowing problem.
+
+###Access Specifiers:---------
+1)public--within class,within package,outside a package which is like is-a relationship,outside package no relationship
+2)protected--within class,within package,outside a package which is like is-a relationship
+3)dafault---within class,within package
+4)private--within class
+
+
+#####Constructor:------
+**In a class if we include or dont include default constructor will be included in class.
+If we specify paramterized constructor then java wont include any constructor as default.
+**and super() method in a class also it will specify as default. but whenever super() method is there we can't call this() method.
+if one is there another one is not available in constructor. and these two are called at first line in the constructor not in second or third.
+if mention this() in the constructor of a class then this() is used to execute the constructor in the same class.
+if we are passing any parameters to that this(num1) this method is responsible for executing the constructor which is accepting one parameter in the same class.
+
+########Wrapper Classes:---------
+*We are using Wrapper classes for making java is pure object oriented.When we are using primitive data types that is why java is not pure object oriented.
+then it fills gap that is like it made java as pure object oriented.
+
+***Wrapper classes are needed when:
+You want to store numbers in Collections (ArrayList, HashMap) because generics only work with objects.
+You want to use utility methods (like Integer.parseInt(), Double.isNaN()).
+You need null values (primitives can’t be null).
+
+✅ We still use primitives because:
+They are faster (no object creation, no GC overhead).
+They are memory-efficient (just raw values).
+They keep Java simple for basic operations. and for the use of loops also. 
+**In Collections automatically converts that Integer to int or int to Integer.
+
+##Boxing and AutoBoxing:---
+*Converting the primitive datatype to Wrapper class object
+*Automatically conevrting the primitive datatype to wrapper class object by java compiler is Autoboxing.
+##UnBoxing and AutoUnboxing:----
+*converting the wrapper class object to primitive datatype.
+*Automatically converting the wrapper class to primitive is autoUnboxing.
+
+Wrapper class object creation:---
+1)Integer a=Integer.valueOf(5);
+int b=a;(#autoUnboxing)
+2)int sum=a.intValue();(#Unboxing)
+
+###############Static Keyword:-----
+*During the class loading itself the memory for static variables allocated in heap memory. and in the class loading itself any static blocks are initialized.
+**Static variables are object independent. but instance variables are object dependent and the memory for those variables are craeted at the time of object creation.
+if we don't create a object then no memory for instance then how can we call these in static block. that's why instance variables are not intiailized or called in static blocks.
+**When does the java initialization block--{sysout()}-execute?  during the object creation and before calling the construction. 
+**static blocks,variables are initialized before the object creation like class loading.
+**Static block or variables are initialized only once that too when the class loads.
+***whenever we have same data(in constructors different) to share to different objects then we use static variables like count of object creation.
+whenever we have same data to share different constrctors then we can use initialization block for that without writing that variables 10 times simply include in initialization block.
+whenever we want to update same variable for different objects then we can use static or initialization.
+Process:--
+during class loading the static variables are allocated in heap and the initialization for that variables is initially 0.
+1-static variables-2)static instantiation block 3)instance variables 4)instantiation block 5)constructors
+
+#############Inheritance-------(super(),inheritance and types of method) 
+*Single,multilevel,hierarchical supports throgh classes.
+*Via interfaces java supports multiple inheritance and hybrid doesnt support.
+*Inheritance :--Acquiring the properties and behaviour  of one class by another class and it is also used for the code reusability.Inheritance produces a is-a relationship
+*in child class we can initialize or reassign values of data members in paraent class and we can't modify which are private attributes using inheritance also.
+*Multilevel inheritance--(grand parent-->parent-->child).Multiple inheritance is not allowed because one child class cant inherit multiple classes.it will lead to ambiguity and diamond shaped.
+*Object is the parent of all classes in java and bydefault everyclass extends Object class and object class have so many methods like getclass,hashcode(),equals().
+*Cyclic inheritance is not allowed in java (parent class telling child is my parent,child class telling parent calss is my parent).
+*Constructor do not participate in the inheritance. but how we are getting the parent class constructor when we are creating the object of child class.
+That is because of super() method if you specify or dont specify the super() is always there in constructor and it will call the parent class constructor.
+**Inherited methods:--- in child class if we are using same methods of parent without any modification then that are inherited methods.
+**Overriden methods:---if we are using same methods but we are slightly changing based on our requirement.
+**Specilized methods:---which are child class methods only
+
+##IMPORTANT:--
+*whenever we are extending another class. then that class will be loaded first after that only child will be loaded.we can inherit the static variables also using child class.
+*****1)when loading classes with inheritance:
+
+*Parent class is loaded → static variables and static blocks of parent execute.
+*Child class is loaded → static variables and static blocks of child execute.
+*When you create an object → parent instance variables + parent constructor run first, then child instance variables + child constructor.
+
+###Upcasting:--
+*changing the child object creation to parent type object-->parent obj=new child();
+*for accesing child class methods it wont work because these methods are not in parent.so we can change the type of object parent to child is Downcasting.
+*(Child obj).method1();---DownCasting.
+
+
+##Super Keyword:--
+*super refers to the parent class.
+*that means whenever we override parent class data members or methods then that time if we want parent class members then we can access by using super keyword.
+
+*********************Override methods rules:---(Final and static methods cant override)
+*we can't decrease the visibiity of the overriden method.we can make more visbility(if protected in parent we can make this as public).
+*We can't change the return type of a method that to primitives data types.
+*we can change the return types in one case that is if those return types having a is-a relationship then it wont show any error.
+*If we are overriding a method then that method should follow the parnt class method like parameters we have to write sameparameters. tehn only it will be overriden method.
+*private members or private methods cant override in child class. private members are wont participate in inheritance.
+*Constructors and private members wont participate in inheritance. static methods cant be overriden. if it looking like overriden then it is a specilized method.
+
+**Final Keyword:-----------
+*final class will not particpate in inheritance.
+*Final methods will get inherited in child class. that means it will participate in inheritance . but it cant override.
+*we cant change the value of the final variable values. 
+*final keyword can e applied to static variable and static methods. but it cant assign to constructor.
+**If we want to know the method is a child class method taht means specialized method or inherited methid or overriden method then we can know easily with the accsing method by parent class object.
+
+Important2:-------
+
+**************************************************Polymorphism:-----------
+**This means same statement can give different results. and code should be reusability and flexible that means less no of statement.
+**The actual meaning of this polymorphism means it allows a method/object/operator to behave in different ways depending on the context.
+This polymorphism can be achieved by method overriding and parent class object.
+*there are two polymorphisms are there :--1)Compile time polymorphism (False Polymorphism)
+                                          2)Runtime Polymorphism  (True polymorphism).
+
+*******Why Compile time polymorphism(False)??????????
+*That means polymorphism means whether it is a method/object that can be acts as a different at runtime(dynamically it will change based on requirement).
+but when it coming to method overloading the compiler will decide which method to execute at this time (It is deciding at compile time only).
+
+******Runtime Polymorphism:----(Method oevrriding and parent class object)-----
+create a object of child classes and take one parent class reference and pass it as parameter in one method. whenever you want you can pass that child class object to parent class reference.
+
+EXAMPLE:---
+public class Airport{
+  public void disp(Aeroplane a1-->parent class reference){
+     a1.method1();
+     a1.method2();
+     a1.method3();
+  }
+}
+in main class :---
+class Main{
+  psvm(){
+    Cargoplane cp=new Cargoplane();
+    Fighterplane fp=new Fighterplane();
+    Airport air1=new Airport();
+    air1.disp(cp); ----disp is using for polymorphism and we are calling this method at runtime because it has the same 
+    air1.disp(fp);
+  }
+}
+In this that 3 methods are overriden from parent class. if the methods are overriden and inherited then nly we acn access that methods through parent class reference.
+if we want to access specilized methods through parent class reference it cant possible.
+
+another example---------
+class main{
+  psvm(){
+    Cargoplane cp=new Cargoplane();
+    Fighterplane fp=new Fighterplane();
+    Aeroplane a1=new Aeroplane();
+    a1=cp;----- in this we are passing address 
+    then using that reference we can call child class override methods and we call inherited methods also but everytime we are assigning and calling same methods in 2 times.
+That's why above example is better approach.
+
+***********************Abstract :-----------
+*if we dont want to write body of the method and also we want to declare that as a method with no errors . then use abstract keyword
+abstract public void disp();--method signature.
+*Concrete Method:-----A method which is having the complete implementation of that and it is opposite to abstract methods.
+*If  class having one method also abstract method then we must make that class as abstract class. otherwise we will get an error.
+*we cannot create a object of abstract class. because it doesn't have complete implementation of that class.
+*if we are extending an abstract class then we must implement those methods otherwise we should make that class also an abstract class because that class also having the methods of parent class.
+*however we can create a reference of abstract class to achieve polymorphism. because it also needs one parent class and method oevrriding.
+*abstract classes also have constructors but it is not for object creation. It is for child classes super() method by default the constructor have the super(). 
+*we cannot make constructor as an abstract and it can apply to class,method but not for variable.we cannot make abstract classes as final and abstract methods also.
+*abstract classes can have static variables,static blocks and instance variables and instantiation block.
+*we can get the static avriables because it is not related to object it is related to class.
+*we can get the instance variables also because the child class extends parent class . these instance variables are loaded when the child class object is created.
+*Even 100%abstraction is also used for database connectivity . That means whenever the database companies came to java then that time java gives methods and that database companies implemented those methods based on their database architecture.
+
+Interfaces:----------------------
+*By default the methods in interface is public and abstract.
+*through interfaces also we can achieve polymorphism. refernce of this allowed but it wont allow to create objects
+*through interfaces we can achieve 100% abstraction. 
+*interface is used to specify our requirement based on requiremenet they will implement those methods.
+*if the class is not implenting the methods then it must be declared as an abstract.
+*A class can implement many interfaces.
+*A class can extend another class and implemnet as many interfaces also. but first we need to extend the class then implement other interfaces.
+*the class which is implementing the inetrfaces in future also it has the ability to do implement other interfaces also there is no restriction to class.
+*An ineterface can extend another interface.
+*By default the variables in inetrface is public,static and final also. 
+*An empty inetrface is also called as marker interface or tagged interface.
+*an inetrface dont have constructor because it doesnt have  a instance variables and also using inetrface we acnnot create a object.
+Reason:--It have only static variables.it dont have concrete methods and the interfaces methods needs to implement by other classes.
+*without oevrride annotation also we can override methods because JVM wont depend on annotations it depends on method signature.
+*From java 8 we have one feature that is an interface have the methods with body and it is mandatory to mention as default.
+Eg:-- default void disp(){Sysout};
+*From java 8 onwards the static methods also included with body it doesnt decalre as an abstract. must and should it have a body.
+*From java 9 they introduced private methods also to avoid duplicate code. And the private methods are instance and static are also there.
+
+#####In classes:--
+1)static variables: Inherited
+2)static methods:-- Inherited
+3)static blocks:--- not Inherited
+4)instance variables:-- Inherited
+5)methods:---   Inherited
+6)constructors:---- not Inherited
+7)instnace block:---- indirectly Inherited
+
+#####In Interfaces:------
+1)static variables: Inherited
+2)static methods:-- not Inherited
+3)static blocks:--- no need
+4)instance variables:-- no need
+5)methods:---   Inherited
+6)constructors:---- no need
+7)instnace block:---- no need
+Difference between Abstract and interface---------------------------  
+
+*dependency injection is also polymorphism because the interface is acts like  diferent ways that means different objects can referred to interface or class that is parent to others.
+*through parent class refernce we can call inherited and override methods only not specialized and also some methods that are not in child. (only parent class methods cannot call with parent class refernce of child object)
+ 
+***************Inner Class--------------------------------
+*A class which is inside another class is called inner class and we cant directly call inner class methods with inner class object that eans we cant create a object of inner class as normal.
+*By using outer class name only we can create object of inner class.
+Outer.Inner obj2=new Outer.Inner();------this works when inner class is static.
+*If it is not a static class then follow the below case:-------
+Outer.Inner obj3=obj.new Inner();----obj is the outer class object.
+
+**************Anonymous inner Class:------------------
+Outer obj=new Outer(){
+              public void show(){
+                Sysout();
+              }
+          }
+this {} part is creating another class we can create new methods and whatever in outer class we can override but we cannot access that new methods with that object.
+*if wewant to access the new method then we can access by using right sie part.method().
+**this anonymous inner class is useful for abstract class implementation whenever we are using the method only once.
+abstract class p(){
+     abstract void show();
+}
+class R extends p{
+    void show(){
+     System.out.println("show");
+    }
+}
+*********another way using anonymous inner class:---------
+abstarct class p(){               ----- in this way we can use interface also
+   abstract void show();
+}
+The below implementation is used for interface,abstract class implementation  also.
+p obj=new p(){
+     void show(){
+      System.out.println("show");
+     }
+}
+
+**********interfaces types:----
+1)normal interface (many methods)
+2)single abstract method(which has only one method)---after some version it is called as functional interface
+3)marker interface
+
+Functional interface:---
+*we can have only one abtsract method but concrete methods also allowed.
+*his is so important that's why they make it as the annotation also @FunctionalInterface
+
+******************Lambda Expression :---
+*it is like anonymous iner class method implementation syntax only
+p obj=new p(){
+     void show(){
+      System.out.println("show");
+     }
+}
+Instead of that we can write like this
+p obj=()->System.out.println("show"); //it works only one abtsract method is there to implement.
+
+*********Example:------------
+interface Sum {
+    int sum1(int a,int b);
+}
+public class Main {
+    public static void main(String[] args) {
+        //LambdaEx e1=new LambdaEx();
+        //e1.disp();
+        Sum s=(int a1,int b1)->a1+b1;
+        System.out.println(s.sum1(2,3));
+    }
+}
+*some predefined functions also there to test lambda expressions that are predicate,function<T,R> like that and theese are callled functional interfaces.
+and we have some predined combined methods also tehre for chaining that is and(),or(),negate().
+we can use this lambda for interface method implementation,collections etc...
+*ForEach loops return type is void and we can use lambda inside that and ternary oeprator also. By default if we  write anything other than print it will take it as return stmt and return.
+ternary operator must have to produce values only not statments.
+num>0?true:false;
+not like this (num>0)?System.out.println("true"):System.out.println("false");---print statemnets are used.
+
+
