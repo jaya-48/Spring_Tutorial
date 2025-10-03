@@ -1,0 +1,192 @@
+*****Dependency Injection Java Configuration +Annotation --------(way of developing spring application)
+*Generally we will define through xml or xml+anotation previously.But now we are going to use pure annotation based 
+*Everything is annotation now then we are using applicationcontext calss is AnnotationConfigApplicationContext.It will accept one parameter that is configuration class
+*ApplicationContext container=new AnnotationConfigApplicationContext(Javaconfiguration.class);
+*Then we have to write configuration class and in this only we have to define @ComponentScan annotation and package.
+*If we want to specify manually base packages then we haveto explicitly mention everything inside that
+For Example:--
+@ComponentScan(basepackages={"package1","package2"});
+@SpringBootApplication(scanbasePackages={"package1","package2"})
+
+*Disadvantage of this way of developing is like if we change small part of code then we have to recompile again otherwise it wont work.
+*In these 3 approaches the best way is xml+annotation approach
+
+*********Pure Annotated Approach:---
+@SpringBootApplication(@ComponentScan+@EnableAutoConfiguration(bean creation and activating ioc containers,datasource bean)
+inside main method--
+ConfigurableApplicationContext context=SpringApplication.run(SpringbootApplication.class)
+Alien alien=context.getBean(Alien.class);
+alien.method();
+*If any bean is created then no parameter constructor statemnts will be executed.
+
+Life cycle of a bean:----
+1)static blocks executed ---when the class loads then this block will execute
+2)Java instance blocks--non static
+3)constructors
+4)methods
+Same as java object but a small difference
+Java:---
+public class Alien{
+
+  static{
+ System.out.println("jaya ");--------- 1
+}
+{
+ System.out.println("lakshmi");-------2
+}
+public Alien(){
+System.ou.println("jaya lakshmi");-----3
+}
+public void display(){
+ System.out.prinltn("jayalakshmi pureti");-----4
+}
+}
+
+***Life cycle of bean:----
+java life cycle + 2 beans
+1)@PostConstruct----this Annotated method invoked after the constructor automatically
+2)@PreDestroy----when the object is going to destroy before that this Annotated method will be executed as important.
+
+Better Injection????----
+*Setter injection is better than the feild injection
+
+You can use @Autowired(required=false) to make it optional.(if that field component is exist it can be used otherwise not (conditiona))
+You can add validation or fallback logic inside the setter.
+It clearly communicates that the dependency can be set (or changed) later.
+It makes testing and runtime reconfiguration much easier than field injection.
+
+*Constructor injection is better than setter injection
+1)Best for mandatory ‌dependencies--constructor
+Best for optional dependencies--setter
+2)Dependency is injected when object creation
+Dependency is injected when setter is called otherwise not.
+3)No external dependency can modify the dependency
+It can modifiy the dependency at runtime
+4)spring will fail at startup of that app if no required bean is there.
+It will get a runtime exception if required bean is not there.
+
+Is it mandatory to use Autowired Annotation for dependency injection????????????????
+**For constructor injection it is not mandatory.We can do injection when only one constructor available inside a class.
+If we have two or more constructors we must specify autowired annotation.
+***It is mandatory for field injection. For setter also it's mandatory but whenever we are using xml configuration we don't need to use that.
+
+***********For Automatic configuration in springboot it will create some beans. The number of beans is depend on what are all we using.
+if we use jpa and some extra it may create upto 200beans like that.
+ 
+Example:--
+ConfigurableApplicationContext container=SpringApplication.run(class);
+int count1=container.getBeanDefinitionCount();
+String[] names=container.getBeanDefinitionNames();
+
+###ConnectionPooling:--
+*Spring uses Default mecahnism ConnectionPooling is Hikari CP
+
+####Spring Boot has the advantages of In memory database it supports embedded tomcat server.
+Whenever you want to deploy web application you need software server and you have to deploy manually.But the spring has tomcat server and it supports the concept of actuators
+
+###Actuators:---
+It has the responsibility of monitoring and managing spring boot applications:--
+It will provide some default endpoints like http://localhost:8080/actuator/health---whether the applicationis up/down
+actuator/metrics----CPU,memory,JVM
+actuator/info---information about application--name,version,description
+actuator/beans---it gives you beans in context
+actoator/loggings
+
+##Spring has the embedded tomcat server and it handles the http request 
+Client -> HTTP Request -> Tomcat (Spring Boot)
+          -> Controller -> Service -> Repository
+          -> JPA/Hibernate -> MySQL Server -> Disk Storage
+
+**POJO --it is a plain old java and if we use anything within jdk then we will call this as POJO.
+
+
+*************************************************Spring Data JPA:-----------------------------------------
+JDBC:-----------
+1)we have to connect to the driver(manual connection)
+2)we have to create table in database,we have to write queries
+3)everytime we have to use connection object for connecting to database.
+
+*Spring+JDBC
+*Spring Data JDBC----To make it easy for us spring made one module and it wont require lot of boilerplate code.
+*Spring data jpa
+
+*IMPORTANT:---
+How we will connect to database generally
+1)loading and Register the driver(latest JDBC has the default for loading and registering)
+2)creating and Establsihing connection
+3)Prepared Statement
+4)Query
+5)Executing the query
+6)Closing the connection
+then we have to close the connection after completing the operation.
+*The main problem with this is connection and closig everytime when the operation is done. it is costly process.That's why Connection Pooling concepts is came:--
+###Connecion Pooling:---
+*we just need to give database location ,type of database and username and password.
+*It will create a collection of connecting objects.whenever we want to perform operation get it the object the from that and use it
+*Popular is HIKARI CP.It is the default connection pooling mechanism is HIKARI CP.
+*Spring has the default of that. It can use for JDBC and HIbernate also.
+
+##General steps in JDBC using only java.
+1)loading and registering the driver(class.forName(driver))
+2)creating the connection(Connection connection=DriverManager.getConnection(url,username,password)
+3)creating the statement(PreapredStatement pstmnt=connection.PreparedStatement(query))
+4)execting the query(ResultSet rs=pstmnt.executeQuery()(select)/executeupdate()(insert,update,delete))
+5)Closing all connection(resultset,pstmnt,connection)
+
+****For latest JDBC there is no need to load and register the driver as long as the JAR file is in application.
+and also there is no manual closing the resources.
+There is 3 types of statements is there:--
+1)createstatement()---slow for repeted statements
+2)Preparedstatement()--it has the placeholders
+3)Callablestatement()
+*Placeholders are used to safely bind values:--
+eg:-- ps.setString(1,"jaya")--1 is indicating sequence
+
+##RESULTSET
+*The result will be stored in ResultSet.
+*A ResultSet is a JDBC object that represents the result set (rows) produced by a SQL SELECT (or any statement that returns rows).
+Conceptually it’s a cursor over the query result: you move the cursor row-by-row and read column values from the current row.
+next() to advance one row,optionally previous(), absolute(n), relative(n) if you use scrollable types.
+
+####SPRING + JDBC:--
+*write details on application.properties when we are running project it spring automatically goes to jdbc or JPA and then application.properties .
+then it will create a datasource bean automatically. that bean only we are injecting . datasource is an interface.
+@Autowired
+private DataSource dataSource;
+
+Connection connection=dataSource.getConnection();
+
+#####Spring Data JDBC:------
+*Spring Data JDBC is like no need of writing boilerplate code . Just simply use jdbcTemplte only.
+jdbcTemplate is a class that will help to remove boilerplate code upto execute query and closing connections.
+jdbcTemplate methods are query,queryForObject(),queryForList(),queryForMap(),update().
+execute() method is for custom sql query.
+batchupdate() is for bulk operations.
+
+**Supose if we dont want any container to get bean of that class then simply creat a class and implement commandLineRunner.
+ this is oevrride the run method that means it will automatically execute everything and inject the bean into that class which bean you want.
+
+**You never get a raw ResultSet from JdbcTemplate.
+Spring handles the ResultSet for you and gives you a mapped result (like a List<Employee>).
+
+***whenever we have 50 tables and we need to implement clases for 50 then we have a solution for this. 
+we just need to write interface of that table and it's implementation wil take care by the Spring.
+there are 3 interfaces to extends our classes.the main class for these 3 interfaces implementation is Repository.
+1)crud Repository
+2)Pagination and Sorting Repository
+3)JPA Repository
+
+And one more is MongoRepository it is not from JPA it is from Spring data.
+***CRUD Repository:---------
+*Methods
+*Optional container and exist by id is used for checking.
+*****Paging and Sorting Repository:---
+**In this we have 14 methods before because it is extending the crud Repository.
+But for latest SpringBoot It have only 2 methods that are findall by sort and findall by paging. Now it is extending Repository interface only.
+**Then what about Repository Interface and which class is implementing the Repository. 
+Actually Spring cretaes a simple class at runtime to implement Repository interface that means it dont have a specific class to implement these Repository interface 
+
+
+
+
+
