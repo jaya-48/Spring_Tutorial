@@ -1,0 +1,195 @@
+Execution order when inheritance is used:
+
+Parent static → Child static
+Parent instance variables + IIB
+Parent constructor
+Child instance variables + IIB
+Child constructor
+
+****Error:-------(This cannot recover)
+*the problem occurs the beyond of the control of the program that means it is usally caused by the JVM or System Environment.
+Example:-----
+suppose we wrote one logic that is one method is calling the second method inside that first method  is called.
+this is loop everytime calling until stack gets iverflow that means based on the capacity of jvm it will exceute once limit is is reached it will lead to error.
+This is called StackoverflowError this is caused by the capacity reached. not by our code.(logical error).
+****Exception:------(this can be recovered)
+
+*********Exception Handling:----------
+*The error occurs at runtime is called Exception.
+An Exception is an unexpected event that disrupts the normal flow of a program.
+*These exceptions are handled by using try,catch blocks. if suppose any risk in statmenets we can write that in try block and that exception handler will write in catch block.
+we have to write both blocks.
+*suppose if only try block is there then that is going to use the default exception handler.
+**************Exception Handling by JVM:----------
+*Suppose is there any exception then that particular method stackframe creates the exception object and it is giving to runtime System in JVM. Then that Runtime System checks whether the same stack handling the exception or not.
+Then if it not handling the exception then it goes to the Default Exception Handler(abnormal Termination). If suppose that Default Exception handler is not there then it goes to the operating system then that is goes to the System Crash.
+*suppose the method is not handling the exception then the JVM will goes to the caller of that method. that means if the method is not providing exception handling then it will goes to the place of where that method is called.
+
+whenever exception we have to do 3 things:---
+1)exception handling
+2)dug the exception/Propagating the exception
+3)rethrow the exception
+
+1)Exception Handling:-----
+*using try and catch
+*if there is any exception in try then only catch block will be executed.whether the exception is occured or not i want to exceute some piece of code then we must include that code in finally block.
+*suppose the method of parent class called in child class and that child class method is called in main method.
+exception occured in parent class then jvm will look for the exception handling in parent class method,child class method,main method in the order. if 3 are not handling the exception then it goes to the default handler exception.
+2)Dug the Exception:-------(propagating the exception)
+*using throws keyword in method signature we are telling this method will throw exception. whoever will calling this method they only sholud handle that exception.
+public void disp() throws ArithmeticException{
+}
+**throws is a keyword that is declared in method declaration that may throw an exceptions.
+it informs the caller of that method to handle exception.
+3)Rethrow Exception:-------
+*it is like the method where exception is occured that method is handling and throwing exception to handle the caller method also is called as rethrowing exception.
+**Example In General:----
+suppose someone else is using our debitcard and used 3 times to get money but it is declining and third time it is blocking that means it is handling the exception but it must tell to the bank also then only the problem is rectified clearly.
+this way we are rethrowing the exception.
+
+throw---handover the exception object to JVM manually.manually throwing an exception.
+
+*finally keyword dominates the return keyword. that means generally the method ends with return statement right but in exception handling it wont stop until the finally block exceuted.
+try{
+   return 20;
+}
+finally{
+return 30;}
+suppose we are printing that method call then the return value is 30 that means return statment in try dominates the finally block return statement.
+after return stateent in try also the finally block executed.
+
+*****CheckedExceptions:---
+*Exceptions always occur at the runtime only.
+*the possiblity of exception at runtime which are checked by compiler is called Checked Exceptions.(Thread.sleep(5000) interrupted execution)(try,catch)
+*The possibility of exceptions at runtime which are not checked by the compiler is called unchecked Exceptions.
+****Exception: 1)checked and unchecked
+***checked:---
+1)IOException-----EOF Exception,FilenotFoundException,RemoteException.
+2)InterruptedException
+3)SQLException
+
+
+***************IMPORTANT POINTS:-------------------
+*runtime error occurs because of the faults in logic of the developer code.
+*Exception is the parent for both checked and unchecked exception. instead of writing multiple exceptions we can refer this parent class Exception.
+*throwable class is the parent for both error and exception classes.
+
+*****Exception in Inheritance Concept+Polymorphism:------
+1)Parent method:---not throwing any Exception
+*the child method at the time of overriding can throw unchecked Exceptions but not checked Exception and without exception is also fine.
+2)parent method:---is throwing unchecked Exception
+*the child method at the time of overriding can throw unchecked Exceptions but not checked Exception and without exception is also fine .
+3)parent method:---is throwing checked Exception
+*the child method at the time of overriding can throw unchecked Exceptions,checked Exception and without exception is also fine but not the partially throwing Exception like Exception.
+
+*Importance of Exception:-------
+someone thought like we can use if else also instead of try,catch .
+by using if and else the user can do any no of times to get the output like account details and password it doesnt have the control.
+
+
+**Custom Exception:--------
+*suppose we created one class and that class extends RuntimeException that is unchecked Exception.
+*if we extend the Exception then it is either checked exception or unchecked exception.
+*if we want throw this custom exception then we can throw by using creating object of that class or directly like
+throw new CustomException();
+if we are throwing the exception then that should be handled by the either that method or caller of that method then our method use like throws exception(in method signature) then the caller of this method can handle easily.
+*if suppose the method may throw 2 exception then we can write those 2 exceptions in singlecatch block only.
+Eg:---
+catch(ArithmeticException | Nullpointerexception e){
+    sysout(e.getMessage());
+} or elsewe can use multiple catch blocks also.
+
+1)Exception Handling:----
+if we write e.getMessage()---it will give exception name
+if we write e.printStackTrace()----it will give the whole class name,line number,exception details. it wont crash the program. but not handling properly.
+*if we want to write any other statements then we can write after finally only before that if we write we will get error.
+*if we write any other exception than the suitable exception then also we are not handling the exception.
+2)propagating the Exception :----
+if the method is not handling the exception then the responsibility of handling the exception is caller of the method then the method must be use throws keyword to forward the handling.
+void disp() throws ArithmeticException{
+}
+the caller method should handle disp method with try and catch blocks.
+*throw keyword is used to throw Exception manually.
+*throw keyword is used for manually throwing exception for custom and predined Exceptions.
+
+****************Custom Exception:--
+we can write custom exception using extending the exception class.
+class CustomAgeException extends Exception{
+    String c1;
+    public CustomAgeException(String msg){
+        this.c1=msg;
+        System.out.println("CustomException"+c1);
+    }
+
+}
+class Exception3{
+    public void method(){
+        int age;
+        Scanner sc = new Scanner(System.in);
+        try{
+        age = sc.nextInt();
+            if (age >= 18) {
+                System.out.println("eligible");
+            } else {
+                throw new CustomAgeException("Age Exception caught");
+
+            }
+        } catch (CustomAgeException e1) {
+            System.out.println("Try again");
+            try{
+                age = sc.nextInt();
+                if (age >= 18) {
+                    System.out.println("eligible");
+                } else {
+                    throw new CustomAgeException("Age Exception caught");
+
+                }
+            } catch (CustomAgeException e2) {
+                System.out.println("Try again");
+                try{
+                    age = sc.nextInt();
+                    if (age >= 18) {
+                        System.out.println("eligible");
+                    } else {
+                        throw new CustomAgeException("Age Exception caught");
+
+                    }
+                } catch (CustomAgeException e3) {
+                    System.out.println("Not eligible");
+                }
+            }
+        }
+    }
+}
+public class CustomExceptionMain {
+    public static void main(String[] args){
+        Exception3 e2=new Exception3();
+//        try{
+//            e2.method();
+//        } catch (CustomAgeException e) {
+//            //throw new RuntimeException(e);
+//            System.out.println("Try again");
+//            try{
+//                e2.method();
+//            } catch (CustomAgeException e1) {
+//                //throw new RuntimeException(e);
+//                System.out.println("Try again");
+//                try{
+//                    e2.method();
+//                } catch (CustomAgeException e4) {
+//                    //throw new RuntimeException(e);
+//                    System.out.println("Sorry");
+//
+//                }
+//
+//            }
+//
+//        }
+        e2.method();
+    }
+}
+
+**Main Important Points:---
+*Supose is there any builtin exceptions like checked Exceptions or custom exceptions  are using inside our code by extending Exception then we must handle those Exceptions. Compiler will force to handle these Exceptions.
+*But when it's coming to if class is extending RuntimeException that copiler wont force to  handle exceptions but we will get exception or if we uisng any runtime exception that compiler wont force us to handle exceptions.
+
