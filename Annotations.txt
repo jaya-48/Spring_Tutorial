@@ -1,0 +1,128 @@
+Association,Aggregation,Composition
+**********ENUM:-----
+*A group of named constants and data that is related.
+Eg:---PASS,FAIL,NORESULT
+2)MON,TUE,WED
+*ENUM Def:---
+*Enum in Java is a special data type used to define a set of named constant values.
+It represents a group of fixed predefined constants like days, directions, or statuses.
+*suppose if we are specifiying this as type of one field then that fileds values must be in this enum constants.
+if we specify anything other than the these constant it wont compile because it wont accept other than these values.
+
+* every constant value in enum is an object because implicitly it extends abstract class
+EXAMPLE:-----
+public enum PracticeEnum{
+    PASS(50),FAIL(40),NR;
+    private int marks;
+
+    PracticeEnum() {
+    }
+
+    PracticeEnum(int marks) {
+        this.marks = marks;
+    }
+
+    public int getMarks() {
+        return marks;
+    }
+
+    public void setMarks(int marks) {
+        this.marks = marks;
+    }
+}
+import java.util.Scanner;
+
+public class EnumMain{
+    public static void main(String[] args){
+        PracticeEnum e2;
+        Scanner sc=new Scanner(System.in);
+        int marksGot=sc.nextInt();
+        if(marksGot>=PracticeEnum.PASS.getMarks()){
+            e2=PracticeEnum.PASS;
+            System.out.println("passed : "+marksGot+" RequiredMarks is  "+e2.getMarks());
+        }
+        else{
+            System.out.println("not passed");
+        }
+
+
+
+    }
+}
+*It is mainly used for predined values if wew nat to set a values of particular values only like
+1)order:----preparing
+          ready
+          dispatched    *these are costant values for order if we want set a value for this field we have to choose in this values only otherwise error.
+***In spring we will use for enum field like
+@Enumerated(ENUMTYPE.String)---This type defaukt value is Ordinal if we write ordinal it will print number of that enumtype.
+private OrderEnum order;
+
+
+
+***********************Annotations:-----------------------------
+*Annotation in Java is a special kind of metadata (information) that provides data about the program, but is not part of the program logic.
+It helps the compiler or frameworks (like Spring, JPA) understand how to process your code.Annotations are used to instruct tools, libraries, or the JVM.
+
+****Retention determines accessibility
+
+1)SOURCE: available only in source code
+2)CLASS: stored in .class file, not visible at runtime
+3)RUNTIME: available at runtime via reflection
+
+****Applied to program elements using @Target
+Fields, methods, classes, parameters, etc.
+
+***Custom annotation:----------
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+//enum Roles{
+//    ADMIN,MANAGER;
+//}
+@Retention(RetentionPolicy.RUNTIME)---sourcecode,RunTime,Class
+@Target(ElementType.FIELD)------which places eligible for placing annotation like method,parameter,constructor,class
+@interface AnnotationsCreation {
+    String role() default "ADMIN" ;
+    int value();
+}
+class Employee {
+    @AnnotationsCreation(value = 1)
+    static String Role;
+}
+public class AnnotationMain{
+    public static void main(String[] args){
+        //Employee e3=new Employee();
+        Employee.Role="manager";
+        System.out.println(Employee.Role);
+
+    }
+}
+IMPORTANT:----
+*If we wany to do something in spring then we can say throw the annotation only and annotation tells to JV,frameworks to how to process our code.
+
+**how annotations are processed:----
+1)An annotation in Java is just a special type of interface.So every annotation is a subtype of java.lang.annotation.Annotation.
+That’s how the compiler recognizes it’s an annotation.
+2)Annotations are handled by using the Retention and Target mainly.
+3)The @Retention policy decides who (compiler or JVM) will process the annotation.
+
+RetentionPolicy	              Where it's visible	                             Who can see/process it
+SOURCE	               Discarded after compilation	                               Only the compiler
+CLASS	          Stored in .class file, not visible to reflection	               JVM can read bytecode, not accessible via reflection
+RUNTIME	           Stored in .class file and available at runtime	               JVM + Reflection API
+
+*for processing annotations at runtime spring uses reflection api.
+*Reflection API = the tool (Java language feature)
+Spring = the framework that uses reflection internally to process its annotations and provide features like DI, ORM integration, transaction management, etc.
+1)RetentionPolicy.SOURCE
+Meaning: Annotation is only present in source code. Discarded by the compiler.
+eg:---@Override,@FunctionalInterface
+2)RetentionPolicy.CLASS
+Meaning: Annotation is stored in the .class file but not available at runtime.
+eg:---@getter and @Setter
+3)RetentionPolicy.RUNTIME
+Meaning: Annotation is stored in the .class file and available at runtime.
+eg:---@Entity,@Autowired
+
+*override annotation is javac compiler itself hardcoded.spring also has the bultin annotations that itself created it's implementations and this annotations are scanned using reflection api.
