@@ -1,0 +1,121 @@
+@Controller,@RequestMapping,@GetMapping,@RequestParam,@PathVariable---Queryparameter,PathParameter,@Param is used to match the names in custom Queries in  Jpa
+*Spring DevTools dependency is used to automatic saving and we dont need to redeploy the application
+
+
+*There is two types of web applications are there.
+1)customer to Business
+2)Business to Business(Restful services)
+
+*springwebmvc is designed by using 2 Design patterns:---
+1)MVC Architectural Design pattern
+2)FrontController Design pattern
+
+**SpringMVC Component:----
+1)FrontController--->Dispatcher Servlet
+2)Handler Mapper
+3)Controller
+4)View Resolver
+5)View
+
+***process:----
+1)Front controller (Dispatcher Servlet)will receive incoming  HTTp request--->Pre processing nad post processing request.
+2)Dispatcher Servlet isa predined class in spring MVC module acts as front controller.
+3)DS will forward the requestedURL to the Handler mapper.
+4)Handler Mapper will identify which controller will handle the request and this details will be given back to Dispatcher Servlet(DS).
+5)Ds will now call the respective conyroller
+6)Controller will process the request and return MOdelAndView Object as a response to DS(FC).
+model->Data
+View->logical view name(view file name)
+7)DS will call View Resolver which will identify the extension and view file location and these details will be given back to DS.
+8)DS will send the model data to view component.
+Model data will be rendered in the view file and sent back the view to DS.
+DS will response back to client in client understandable format(view page).
+
+**In spring WebMVC the Front Controller is DispatcherServlet which is a raedy made servlet component.
+All the activities in Spring MVC takes place under the control or monitoring of DispatcherServlet(Front Controller).
+
+***WEB APP with SpringWEBMVC:-----
+--->XML driven config--web.xml
+--->Annotation Config(XML+annotation)
+--->SpringBoot mvc(annotation)
+
+
+**JAR & WAR Files:------
+*JAR is a collection of .class files(compiled files) of our code/(predined class code).
+*WAR is a collection all files of application. That is java code files,configuration files,web file and frontend code file. WAR files only deployed in server.
+
+*generally If we want our application can be used by customers or clients also then we ahve to deploy that application in server.
+if we want to deploy our appliation in server we must deploy our WAR file server.
+*In spring we have already embedded tomcat server that's why we are accesing the application through web. That's why in spring initializer we are adding jar only.
+*suppose if we want to deploy our app in different server then we should add WAR to that.
+
+*whenevr we are generatig WAR file it will defaultly generates two files in spring one is main method to run in embedded server and another one is to run if we want to deploy in any server other than this.
+
+*****HTTP Methods:---
+*whenever we want to send or get the details then we sholud follow protocol that is HTTP(Hyper text transfer protocol)
+Methods:---GET,PUT,POST,Delete,patch
+*the default behaviour of RequestMapping is GET method.
+*From spring1 to Spring4 for any request we are using only one anotation that is @RequestMapping and by using attributes only we are specifying which method whether it is get,post,delete like that
+Examle:---
+@RequestMapping(value="/Welcome",method=RequestMethod.GET)
+
+***To bind our method to GET mapping then we use @GetMapping
+like this we have @PostMapping,@PutMapping,@DeleteMapping.
+*whenever we have two controllers in one application and in both controllers for any httpmethod if wewrite same endpoint then we must write @RequestMapping above the class and must distinguish between those2 controllers.
+*Generally if we want use the app in web we must access through web then we must mention taht class as @Controller.
+*For every application we can write Context path i application.properties.
+example:--server.servlet.context-path=/Application1
+In chrome:---http://localhost:port/Application1
+
+**jasper is used for compiling jsp pages.
+
+**For getting the data in web using html/Jsp
+In controllerwe have to write Model.
+@GetMapping("/greet")
+public String generateWish(Model model){
+   String greeting=greetService.generateWish("jaya");
+   model.addAttribute("wish",greeting);
+   return "greeting";
+}
+greeting is jsp page.
+*Intsead of model we can use Map also because it is extending internally Map only.
+
+
+**Sprig webmvc uses internally servlets only if we write servlet code then no problem. HttpServletResponse response --->this is for response.
+and in this we will use response.writer() and writer.println() for web i mean html code printing.
+
+
+*the data we can pass to the url in 2 ways one is Queryparam,path parameter.
+1)Queryparameter:----
+*If we want pass data to url using queryparam then we must write end of url like (?key=value&key=value)
+*@RequestParam() is used to match with url paramaters to method parameters.
+Eg:---
+@GetMapping("learnersinfo")//https://localhost:8080/Telusko/learnersinfo?name="jaya"&Course="full stack"
+public String getInfo(String name,@RequestParam("Course")String c,Model model){
+String info="hello"+name;
+model.addAttribute("msg",info)
+return "info"-->Jsp page name 
+}
+
+2)PathParameter
+for url--https://localhost:8080/telusko/leranersinfo2/Jaya/Full stack
+*For passing direct data without using any key we will use @PathVariable
+@GetMapping("learnersinfo2/{name}/{course}")
+public String getInfo2(@PathVariable("name")String n,@PathVariable("Course")String Course,@RequestParam("Course")String c,Model model){
+String info="hello"+name+"course is"+Course;
+model.addAttribute("msg",info)
+return "info"-->Jsp page name 
+}
+
+***we can use multiple endpoints for the same method
+Eg:--
+@GetMapping({"/coursedetail","/course","/info"})---will get the same page and same details .
+
+*prcatice---model,map,jsp pages,array collection retrieval using jsp page(JSTL dependency,jasper)
+*Form--->one way
+*Form--spring Tag library--->Two way binding for this we ahve to mention @modelAttribute in method parameters
+
+*****Thymleaf and bootstrap css
+
+***After this we are going to discuss the Restful services before this Restful services we have Soap based WebServices.
+The Restful services are introduced by the Roy Fielding. 
