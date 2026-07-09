@@ -135,22 +135,77 @@ but when it coming to method overloading the compiler will decide which method t
 create a object of child classes and take one parent class reference and pass it as parameter in one method. whenever you want you can pass that child class object to parent class reference.
 
 EXAMPLE:---
-public class Airport{
-  public void disp(Aeroplane a1-->parent class reference){
-     a1.method1();
-     a1.method2();
-     a1.method3();
-  }
+// Parent class
+class Aeroplane {
+    public void method1() {
+        System.out.println("Aeroplane method1");
+    }
+
+    public void method2() {
+        System.out.println("Aeroplane method2");
+    }
+
+    public void method3() {
+        System.out.println("Aeroplane method3");
+    }
 }
-in main class :---
-class Main{
-  psvm(){
-    Cargoplane cp=new Cargoplane();
-    Fighterplane fp=new Fighterplane();
-    Airport air1=new Airport();
-    air1.disp(cp); ----disp is using for polymorphism and we are calling this method at runtime because it has the same 
-    air1.disp(fp);
-  }
+
+// Child class
+class CargoPlane extends Aeroplane {
+    @Override
+    public void method1() {
+        System.out.println("CargoPlane is carrying goods");
+    }
+
+    @Override
+    public void method2() {
+        System.out.println("CargoPlane is taking off");
+    }
+
+    @Override
+    public void method3() {
+        System.out.println("CargoPlane is landing");
+    }
+}
+
+// Child class
+class FighterPlane extends Aeroplane {
+    @Override
+    public void method1() {
+        System.out.println("FighterPlane is attacking");
+    }
+
+    @Override
+    public void method2() {
+        System.out.println("FighterPlane is taking off");
+    }
+
+    @Override
+    public void method3() {
+        System.out.println("FighterPlane is landing");
+    }
+}
+
+// Airport class
+class Airport {
+    public void disp(Aeroplane a1) {
+        a1.method1();
+        a1.method2();
+        a1.method3();
+    }
+}
+// Main class
+public class Main {
+    public static void main(String[] args) {
+
+        CargoPlane cp = new CargoPlane();
+        FighterPlane fp = new FighterPlane();
+
+        Airport air1 = new Airport();
+
+        air1.disp(cp);   // Runtime polymorphism
+        air1.disp(fp);   // Runtime polymorphism
+    }
 }
 In this that 3 methods are overriden from parent class. if the methods are overriden and inherited then nly we acn access that methods through parent class reference.
 if we want to access specilized methods through parent class reference it cant possible.
